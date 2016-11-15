@@ -387,9 +387,18 @@ var applyCustomConfig = (function(){
                 if(data.attrib['delete'] === 'true') {
                     logger.debug("Deleting preference");
                     childEl = parentEl.find(childSelector);
-                    logger.debug("**childEl"); logger.dump(childEl);
 
-                    if(childEl) parentEl.remove(childEl);
+                    if(childEl) {
+                      logger.debug("**childEl"); logger.dump(childEl);
+                      parentEl.remove(childEl);
+                    } else {
+                      logger.debug("**childEl"); logger.dump(childEl);
+                      childEl = root.find('*/' + childSelector);
+
+                      if (childEl) {
+                        root.remove(childEl);
+                      }
+                    }
                 } else {
                     parentEl.attrib[childSelector.replace("@",'')] = data.attrib['value'];
                 }
